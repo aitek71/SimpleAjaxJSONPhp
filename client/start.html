@@ -23,12 +23,36 @@
 			    // ===========================================================================
 			-->
 			<div class="w3-row">
-				<div class="w3-col m6">
+				<div class="w3-col m8">
+					<!-- => FORM INPUT
+						Component ini berfungsi untuk menginputkan sesuatu ke database.
+					-->
+					<form class="w3-margin w3-card w3-padding w3-padding-16 w3-text-grey" role="form" id="formInput">
+						<section class="w3-row w3-margin-bottom">
+							<label for="titleInput">Title</label>
+							<input type="text" placeholder="Input Title" id="titleInput" class="w3-input w3-border w3-round">
+						</section>
+						<section class="w3-row w3-margin-bottom">
+							<label for="descriptionInput">Description</label>
+							<textarea placeholder="Input Description" id="descriptionInput" class="w3-input w3-border w3-round"></textarea>
+						</section>
+						<section class="w3-row w3-margin-bottom">
+							<label for="coverInput">Cover</label>
+							<input type="file" placeholder="Input Cover" id="coverInput" class="w3-input w3-border w3-round">
+						</section>
+						<section class="w3-row w3-border-top">
+							<button onclick="inputForm()" class="w3-margin-top w3-button w3-border w3-border-blue w3-white w3-hover-blue w3-text-blue w3-round">Send <i class="fa fa-send"></i></button>
+						</section>
+					</form>
 					<!-- => FORM INPUT
 						Component ini berfungsi untuk menginputkan sesuatu ke database.
 					-->
 				</div>
-				<div class="w3-col m6">
+				<div class="w3-col m4">
+					<!-- => DISPLAY INPUT
+						Component ini berfungsi untuk menampilkan list dari database.
+					-->
+					<div id="display" class="w3-margin w3-card"></div>
 					<!-- => DISPLAY INPUT
 						Component ini berfungsi untuk menampilkan list dari database.
 					-->
@@ -42,5 +66,89 @@
 			-->
 		</div>
 	</div>
+	<script type="text/javascript">
+		
+		/*
+		* SCRIPT HERE
+		*/
+
+			// AJAX FUNCTION
+			function ajax(request, response){
+				// ==> DECLARATION VARIABLE AJAX
+				let xmlhttp
+
+				// ==> CHECK COMPATIBILITY BROWSER AND INITIALIZATION VARIABLE AJAX
+				if(window.XMLHttpRequest){
+					xmlhttp = new XMLHttpRequest()
+				}
+				else{
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+				}
+
+				// ==> CHECK AVAIBLE REQUEST AND GET THE RESPONSE
+				xmlhttp.onload = function(){
+					if(this.readyState == 4 && this.status == 200){
+						// IF SUCCESS
+						response(this.responseText)
+					}
+					else{
+						// IF NOT SUCCESS
+					}
+				}
+
+				// ==> OPEN SESSION TO SEND DATA
+				xmlhttp.open("POST", request.url, true)
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+				xmlhttp.send(request.data)
+			}
+
+			// CALL AJAX FUNCTION
+			function inputForm(){
+				// ==> DECLARATION VARIABLE
+				let titleInput, descriptionInput, coverInput
+				let formData, request, formInput
+
+				// ==> INITIALIZATION VARIABLE
+				titleInput = document.getElementById("titleInput")
+				descriptionInput = document.getElementById("descriptionInput")
+				coverInput = document.getElementById("coverInput")
+				formInput = document.getElementById("formInput")
+				formData = new FormData()
+
+				// ==> VALIDATE
+				if(titleInput.value == "" || descriptionInput.value == "" || coverInput.value == ""){
+					alert("Harap isi seluruh form yang ada")
+					return
+				}
+				else{
+					// ==> PREPARATION FOR REQUEST
+					coverInput = coverInput.files[0]
+					formData.append("action", "insert")
+					formData.append("title", titleInput.value)
+					formData.append("description", description.value)
+					formData.append("cover", coverInput, coverInput.name)
+					request = JSON.stringify({
+						"url": "../server/proses.php",
+						"data": formData
+					})
+
+					// ==> GET RESPONSE
+					ajax(request, function(response){
+						if(response != "404"){
+							alert("Berhasil menginput data")
+							formInput.reset()
+						}
+						else{
+							alert("Gagal menginput data")
+						}
+					})
+				}
+			}
+
+		/*
+		* SCRIPT HERE
+		*/		
+
+	</script>
 </body>
 </html>
