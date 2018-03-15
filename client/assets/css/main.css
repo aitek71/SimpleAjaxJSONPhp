@@ -1,0 +1,46 @@
+/* MAIN CSS
+------------------------
+*/
+.mainContainer{
+    width: 64% !important;
+    margin: 0 auto;
+}
+.displayContainer{
+	height: 640px !important;
+}
+.background-thumb{
+	background-color: aliceblue;
+	background-size: cover;
+	background-position: center;
+}
+/* THUMB TOP */
+.thumb-cover{
+	display: block;
+	height: 156px;
+}
+.thumb-text{
+	display: block;
+	height: 112px;
+}
+/* MOBILE DESKTOP */
+.mobile{
+	display: none;
+}
+.desktop{
+	display: block;
+}
+@media screen and (max-width: 728px){
+    .mainContainer{
+        width: 100%;
+    }
+	.mobile{
+		display: block !important;
+	}
+	.desktop{
+		display: none !important;
+	}
+	.thumb-text{
+		display: block;
+		height: auto;
+	}
+}
