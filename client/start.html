@@ -23,7 +23,7 @@
 			    // ===========================================================================
 			-->
 			<div class="w3-row">
-				<div class="w3-col m8">
+				<div class="w3-col m12">
 					<!-- => FORM INPUT
 						Component ini berfungsi untuk menginputkan sesuatu ke database.
 					-->
@@ -41,18 +41,18 @@
 							<input type="file" placeholder="Input Cover" id="coverInput" class="w3-input w3-border w3-round">
 						</section>
 						<section class="w3-row w3-border-top">
-							<button onclick="inputForm()" class="w3-margin-top w3-button w3-border w3-border-blue w3-white w3-hover-blue w3-text-blue w3-round">Send <i class="fa fa-send"></i></button>
+							<button type="button" onclick="inputForm()" class="w3-margin-top w3-button w3-border w3-border-blue w3-white w3-hover-blue w3-text-blue w3-round">Send <i class="fa fa-send"></i></button>
 						</section>
 					</form>
 					<!-- => FORM INPUT
 						Component ini berfungsi untuk menginputkan sesuatu ke database.
 					-->
 				</div>
-				<div class="w3-col m4">
+				<div class="w3-col m12">
 					<!-- => DISPLAY INPUT
 						Component ini berfungsi untuk menampilkan list dari database.
 					-->
-					<div id="display" class="w3-margin w3-card"></div>
+					<div id="display" class="w3-margin"></div>
 					<!-- => DISPLAY INPUT
 						Component ini berfungsi untuk menampilkan list dari database.
 					-->
@@ -97,8 +97,8 @@
 				}
 
 				// ==> OPEN SESSION TO SEND DATA
-				xmlhttp.open("POST", request.url, true)
-				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+				xmlhttp.open("POST", request.url)
+				// alert(request.data)
 				xmlhttp.send(request.data)
 			}
 
@@ -125,17 +125,18 @@
 					coverInput = coverInput.files[0]
 					formData.append("action", "insert")
 					formData.append("title", titleInput.value)
-					formData.append("description", description.value)
+					formData.append("description", descriptionInput.value)
 					formData.append("cover", coverInput, coverInput.name)
-					request = JSON.stringify({
+					request = {
 						"url": "../server/proses.php",
 						"data": formData
-					})
+					}
 
 					// ==> GET RESPONSE
 					ajax(request, function(response){
 						if(response != "404"){
-							alert("Berhasil menginput data")
+							alert(response)
+							// alert("Berhasil menginput data")
 							formInput.reset()
 						}
 						else{
