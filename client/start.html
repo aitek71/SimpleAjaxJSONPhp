@@ -103,6 +103,7 @@
 			}
 
 			// CALL AJAX FUNCTION
+			// INPUT FORM
 			function inputForm(){
 				// ==> DECLARATION VARIABLE
 				let titleInput, descriptionInput, coverInput
@@ -135,8 +136,7 @@
 					// ==> GET RESPONSE
 					ajax(request, function(response){
 						if(response != "404"){
-							alert(response)
-							// alert("Berhasil menginput data")
+							alert("Berhasil menginput data")
 							formInput.reset()
 						}
 						else{
@@ -145,6 +145,22 @@
 					})
 				}
 			}
+
+			// GET DATA
+			function getData(){
+				let formData = new FormData()
+				formData.append("action", "select")
+				request = {
+					"url": "../server/proses.php",
+					"data": formData
+				}
+
+				// ==> GET RESPONSE
+				ajax(request, function(response){
+					document.getElementById("display").innerHTML = response
+				})
+			}
+			let getDataRealTime = setInterval(getData, 1000);
 
 		/*
 		* SCRIPT HERE
